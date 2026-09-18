@@ -8,7 +8,15 @@ public class Rot13 {
     'í','ì','ï','j','k','l','m','n','ñ','o','ó','ò','p','q','r','s','t','u',
     'ú','ù','ü','v','w','x','y','z'};
     
-   
+    public static int buscaPos(char c , char [] abc){
+        for (int i = 0; i < abc.length; i++ ){
+            if(abc[i] == c ){
+                return i;
+            }     
+        }
+
+        return -1;
+    }
     public static String xifraRot13(String cadena){
         String textXifrat = "";
         
@@ -19,21 +27,12 @@ public class Rot13 {
             char c2 = ' ';
 
             if (Character.isUpperCase(c)){
-                for(int j = 0; j < majuscules.length; j++ ){
-                    if(majuscules[j] == c ){
-                        pos = j;
-                        break;
-                    } 
-                }
+                pos = buscaPos(c, majuscules);
                 pos2 = (pos + 13) % majuscules.length;
                 c2 = majuscules[pos2];
+
             }else if (Character.isLowerCase(c)){
-                for(int j = 0; j < minuscules.length; j++ ){
-                    if(minuscules[j] == c ){
-                        pos = j;
-                        break;
-                    } 
-                }
+                pos = buscaPos(c, minuscules);
                 pos2 = (pos + 13) % minuscules.length;
                 c2 = minuscules[pos2];
             }else{
@@ -45,11 +44,35 @@ public class Rot13 {
     }
     public static String desxifraRot13(String cadena){
         String textDesxifrat = "";
+        for (int i = 0; i < cadena.length(); i++ ){
+            int pos = -1;
+            int pos2 = -1;
+            char c = cadena.charAt(i);
+            char c2 = ' ';
+
+            if (Character.isUpperCase(c)){
+                pos = buscaPos(c, majuscules);
+                pos2 = (pos - 13 +majuscules.length) % majuscules.length;
+                c2 = majuscules[pos2];
+            }else if (Character.isLowerCase(c)){
+                pos = buscaPos(c, minuscules);
+                pos2 = (pos - 13 + minuscules.length) % minuscules.length;
+                c2 = minuscules[pos2];
+            }else{
+                c2=c;
+            }
+            textDesxifrat += c2;
+        }
+
         return textDesxifrat;
     }
     public static void main(String[] args) {
         System.out.println(xifraRot13("ABZ"));
         System.out.println(xifraRot13("XYZ"));
         System.out.println(xifraRot13("Hola, Mr. calçot"));
+
+        System.out.println(desxifraRot13("IÏJ"));
+        System.out.println(desxifraRot13("FGH"));
+        System.out.println(desxifraRot13("Òwúi, Ùá. jiúkwb"));
     }
 }
