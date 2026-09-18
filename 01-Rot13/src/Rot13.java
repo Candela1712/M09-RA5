@@ -17,51 +17,35 @@ public class Rot13 {
 
         return -1;
     }
+
+    public static char transformaChar(char c, int desplacament){
+        char[] abc;
+
+        if (Character.isUpperCase(c)){
+            abc = majuscules;
+        }else if(Character.isLowerCase(c)){
+            abc = minuscules;
+        }else{
+            return c;
+        }
+        int pos = buscaPos(c, abc);
+        int pos2 = (pos + desplacament + abc.length) % abc.length;
+        return abc[pos2];
+    }
+    
     public static String xifraRot13(String cadena){
         String textXifrat = "";
         
         for (int i = 0; i < cadena.length(); i++ ){
-            int pos = -1;
-            int pos2 = -1;
-            char c = cadena.charAt(i);
-            char c2 = ' ';
-
-            if (Character.isUpperCase(c)){
-                pos = buscaPos(c, majuscules);
-                pos2 = (pos + 13) % majuscules.length;
-                c2 = majuscules[pos2];
-
-            }else if (Character.isLowerCase(c)){
-                pos = buscaPos(c, minuscules);
-                pos2 = (pos + 13) % minuscules.length;
-                c2 = minuscules[pos2];
-            }else{
-                c2=c;
-            }
-            textXifrat += c2;
+            textXifrat += transformaChar(cadena.charAt(i), 13);
         }
         return textXifrat;
     }
+
     public static String desxifraRot13(String cadena){
         String textDesxifrat = "";
         for (int i = 0; i < cadena.length(); i++ ){
-            int pos = -1;
-            int pos2 = -1;
-            char c = cadena.charAt(i);
-            char c2 = ' ';
-
-            if (Character.isUpperCase(c)){
-                pos = buscaPos(c, majuscules);
-                pos2 = (pos - 13 +majuscules.length) % majuscules.length;
-                c2 = majuscules[pos2];
-            }else if (Character.isLowerCase(c)){
-                pos = buscaPos(c, minuscules);
-                pos2 = (pos - 13 + minuscules.length) % minuscules.length;
-                c2 = minuscules[pos2];
-            }else{
-                c2=c;
-            }
-            textDesxifrat += c2;
+            textDesxifrat += transformaChar(cadena.charAt(i), -13);
         }
 
         return textDesxifrat;
