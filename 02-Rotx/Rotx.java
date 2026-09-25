@@ -23,7 +23,7 @@ public class Rotx {
 
     public static void forcaBrutaRotX(String cadenaXifrada){
         String cadenaDesxifrada;
-        System.out.println("Missatge xifrat: " +  cadenaXifrada);
+        System.out.printf("%nMissatge xifrat: %s%n",  cadenaXifrada);
         for(int i = 0; i < abc.length(); i++){
             cadenaDesxifrada =  desxifraRotX(cadenaXifrada, i);
             System.out.printf("(%d) -> %s%n",i,cadenaDesxifrada);
@@ -54,18 +54,18 @@ public class Rotx {
     }
 
     public static void main(String[] args) {
+        System.out.printf("Xifrat: %n----------%n");
         System.out.println(xifraRotX("ABC",0));
         System.out.println(xifraRotX("XYZ", 2));
         System.out.println(xifraRotX("Hola, Mr. calçot", 4));
         System.out.println(xifraRotX("Perdó, per tu què és?", 6));
 
+        System.out.printf("%nDesxifrat: %n----------%n");
         System.out.println(desxifraRotX("ABC",0));
         System.out.println(desxifraRotX("ZAÁ", 2));
         System.out.println(desxifraRotX("Ïqoc, Óú. écoèqü", 4));
         System.out.println(desxifraRotX("Úiüht, úiü xy ùyì íw?", 6));
         
         forcaBrutaRotX("Úiüht, úiü xy ùyì íw?");
-
-
     }
 }
