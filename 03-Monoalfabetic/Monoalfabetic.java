@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Monoalfabetic {
 
-    private static String abc = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüwxyz";
+    private static String abc = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";
     private static final char[] majuscules = abc.toUpperCase().toCharArray();
 
     public static char[] permutaAlfabet(char[] alfabet){

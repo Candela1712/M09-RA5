@@ -1,5 +1,5 @@
 public class Rotx {
-    static String abc = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüwxyz";
+    static String abc = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";
     static char[] minuscules = abc.toCharArray();
     static char[] majuscules = abc.toUpperCase().toCharArray();
 
@@ -64,8 +64,8 @@ public class Rotx {
         System.out.println(desxifraRotX("ABC",0));
         System.out.println(desxifraRotX("ZAÁ", 2));
         System.out.println(desxifraRotX("Ïqoc, Óú. écoèqü", 4));
-        System.out.println(desxifraRotX("Úiüht, úiü xy ùyì íw?", 6));
+        System.out.println(desxifraRotX("Úiüht, úiü wx ùxì ív?", 6));
         
-        forcaBrutaRotX("Úiüht, úiü xy ùyì íw?");
+        forcaBrutaRotX("Úiüht, úiü wx ùxì ív?");
     }
 }
