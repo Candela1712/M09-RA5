@@ -1,33 +1,103 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public class Polialfabetic {
     
-    public static void permutaAlfabet(char[]alfabet){
+   private static String alfabet = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";
+   private static final char[] majuscules = alfabet.toUpperCase().toCharArray();
+   private static char[] alfabetPermutat = new char[majuscules.length];
+   private static Random random;
+   private static final int clauSecreta = 2468;
 
-    }
-    public static String xifraPoliAlfa(String msg){
+   public static void permutaAlfabet(){
+      List<Character> alfabetList = new ArrayList<>();
 
-    }
-    public static String desxifraPoliAlfa(String msgXifrat){
+      for(char c: majuscules){
+         alfabetList.add(c);
+      }
 
-    }
+      Collections.shuffle(alfabetList, random);
+      for (int i = 0; i < alfabetList.size(); i++) {
+         alfabetPermutat[i] = alfabetList.get(i);
+      }
+   }
 
-    public static void main(String[] args) {
-        String msgs[] = {"Test 01 àrbitre, coixí, Perímetre", 
-                "Test 02 Taüll, DÍA, año", 
-                "Test 03 Peça, Òrrius, Bòvila"};
-        String msgsXifrats[] = new String[msgs.length];
+   public static String xifraPoliAlfa(String msg){
+      String xifrat = "";
 
-         System.out.println("Xifratge:\n----------");
-         for (int i = 0; i < msgs.length; i++) {
-            initRandom(clauSecreta);
-            msgsXifrats[i] = xifraPoliAlfa(msgs[i]);
-            System.out.printf("%-34s -> %s%n",msgs[i],msgsXifrats[i]);
+      for (int i = 0; i < msg.length(); i++) {
+         char c = msg.charAt(i);
+         permutaAlfabet();
+         int pos = buscaPosAbecedari(Character.toUpperCase(c), majuscules);
+
+         if (pos == -1) {
+            xifrat += c;
+         }else{
+            char lletraXifrada = alfabetPermutat[pos];
+            if (Character.isLowerCase(c)) {
+               lletraXifrada = Character.toLowerCase(lletraXifrada);
+            }
+            xifrat += lletraXifrada;
          }
+      }
+      return xifrat;
+   }
 
-         System.out.println("Xifratge:\n----------");
-         for (int i = 0; i < msgs.length; i++) {
-            initRandom(clauSecreta);
-            msgsXifrats[i] = desxifraPoliAlfa(msgs[i]);
-            System.out.printf("%-34s -> %s%n",msgsXifrats[i],msgs[i]);
+   public static String desxifraPoliAlfa(String msgXifrat){
+      String desxifrat = "";
+
+      for (int i = 0; i < msgXifrat.length(); i++) {
+         char c = msgXifrat.charAt(i);
+         permutaAlfabet();
+         
+         int pos = buscaPosAbecedari(Character.toUpperCase(c), alfabetPermutat);
+
+         if (pos == -1) {
+            desxifrat += c;
+         }else{
+            char lletraDesxifrada = majuscules[pos];
+            if(Character.isLowerCase(c)){
+               lletraDesxifrada = Character.toLowerCase(lletraDesxifrada);
+            }
+            desxifrat += lletraDesxifrada;
          }
+      }
+      return desxifrat;
+   }
+
+   public static void initRandom(int clau){
+      random = new Random(clau);
+   }
+
+   public static int buscaPosAbecedari(char c, char[] abc){
+      for (int i = 0; i < abc.length; i++ ){
+         if(abc[i] == c ){
+            return i;
+         }     
+      }
+        return -1;
+    }
+
+   public static void main(String[] args) {
+      String msgs[] = {"Test 01 àrbitre, coixí, Perímetre", 
+            "Test 02 Taüll, DÍA, año", 
+            "Test 03 Peça, Òrrius, Bòvila"};
+      String msgsXifrats[] = new String[msgs.length];
+
+      System.out.println("Xifratge:\n----------");
+      for (int i = 0; i < msgs.length; i++) {
+         initRandom(clauSecreta);
+         msgsXifrats[i] = xifraPoliAlfa(msgs[i]);
+         System.out.printf("%-34s -> %s%n",msgs[i],msgsXifrats[i]);
+      }
+
+      System.out.println("Desxifratge:\n----------");
+      for (int i = 0; i < msgs.length; i++) {
+         initRandom(clauSecreta);
+         String msg = desxifraPoliAlfa(msgsXifrats[i]);
+         System.out.printf("%-34s -> %s%n",msgsXifrats[i],msg);
+      }
     }
 }
