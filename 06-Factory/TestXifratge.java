@@ -1,3 +1,4 @@
+import src.iticbcn.xifratge.AlgorismeAES;
 import src.iticbcn.xifratge.AlgorismeFactory;
 import src.iticbcn.xifratge.AlgorismeMonoalfabetic;
 import src.iticbcn.xifratge.AlgorismePolialfabetic;
@@ -11,7 +12,6 @@ public class TestXifratge {
         AlgorismeFactory[] aFactory = {
             new AlgorismeAES(), new AlgorismeMonoalfabetic(), 
             new AlgorismePolialfabetic(), new AlgorismeRotX()
-
         };
         String[] aNames = { "AES", "Monoalfabètic", "Polialfabètic", "RotX" };
         String[] msgs = { "Test 01: Àlgid, Ülrich, Vàlid",
