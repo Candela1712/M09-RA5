@@ -6,6 +6,8 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import src.iticbcn.xifratge.Xifrador;
+
 public class XifradorAES implements Xifrador {
     
     public static final String ALGORISME_XIFRAT = "AES";

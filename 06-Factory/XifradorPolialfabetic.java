@@ -3,6 +3,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import src.iticbcn.xifratge.Xifrador;
+
 public class XifradorPolialfabetic implements Xifrador{
     
    private static String alfabet = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";

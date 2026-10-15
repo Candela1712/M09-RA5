@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import src.iticbcn.xifratge.Xifrador;
+
 public class XifradorMonoalfabetic implements Xifrador{
 
     private static String alfabet = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";

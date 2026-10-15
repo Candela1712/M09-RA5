@@ -1,3 +1,9 @@
+import src.iticbcn.xifratge.AlgorismeFactory;
+import src.iticbcn.xifratge.AlgorismeRotX;
+import src.iticbcn.xifratge.ClauNoSuportada;
+import src.iticbcn.xifratge.TextXifrat;
+import src.iticbcn.xifratge.Xifrador;
+
 public class TestXifratge {
     public static void main(String[] args) {
         AlgorismeFactory[] aFactory = {
