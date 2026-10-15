@@ -1,5 +1,4 @@
-package src.iticbn.xifratge;
-
+package src.iticbcn.xifratge;
 public class XifradorRotX implements Xifrador {
     private static String abc = "aáàbcçdeéèfghiíìïjklmnñoóòpqrstuúùüvwxyz";
     private static char[] minuscules = abc.toCharArray();
