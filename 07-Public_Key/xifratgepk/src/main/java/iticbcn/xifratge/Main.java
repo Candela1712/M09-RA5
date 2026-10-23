@@ -26,6 +26,7 @@ public class Main {
 
         System.out.println("===================================");
         System.out.println("Clau pública: " + strClauPub);
+        System.out.println("===================================");
         System.out.println("Clau privada: " + strClauPriv);
 
 
