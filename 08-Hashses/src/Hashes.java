@@ -14,10 +14,10 @@ public class Hashes {
 
         return hex.formatHex(bytes);
     }
-    public String getPBKDFAmbSalt(String pw, String salt) throws Exception{
+    public String getPBKDF2AmbSalt(String pw, String salt) throws Exception{
         PBEKeySpec spec = new PBEKeySpec(
             pw.toCharArray(),salt.getBytes(StandardCharsets.UTF_8),
-            10000,256
+            10000,128
         );
 
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
@@ -29,7 +29,56 @@ public class Hashes {
         return hex.formatHex(bytes);
     }
 
-    public  String forcaBruta(String alg, String hash, String salt){
+    private int npass = 0;
+    public String forcaBruta(String alg, String hash, String salt) throws Exception{
+        npass = 0;
+
+        String charset = "abcdefABCDEF1234567890!.";
+
+        for (int longitud = 6; longitud >= 1; longitud--) {
+            String resultat = provaCombinacions(alg, hash, salt, new char[longitud], 0, charset);
+            if (resultat != null) {
+                return resultat;
+            }
+        }
+
+        return null;
+    }
+
+    private String provaCombinacions(String alg, String hash, String salt, char[] password, int pos, String charset)
+        throws Exception {
+
+        if (pos == password.length) {
+            String candidata = new String(password);
+            npass++;
+
+            String hashCandidat;
+
+            if (alg.equalsIgnoreCase("SHA-512")) {
+                hashCandidat = getSHA512AmbSalt(candidata, salt);
+            } else if (alg.equalsIgnoreCase("PBKDF2")) {
+                hashCandidat = getPBKDF2AmbSalt(candidata, salt);
+            } else {
+                throw new IllegalArgumentException("Algorisme no suportat: " + alg);
+            }
+
+            if (hashCandidat.equalsIgnoreCase(hash)) {
+                return candidata;
+            }
+
+            return null;
+        }
+
+        for (int i = 0; i < charset.length(); i++) {
+            password[pos] = charset.charAt(i);
+
+            String resultat = provaCombinacions(alg, hash, salt, password, pos + 1, charset);
+
+            if (resultat != null) {
+                return resultat;
+            }
+        }
+
         return null;
     }
     
@@ -50,7 +99,36 @@ public class Hashes {
             + " segons / " + miliseg + " millis";
     }
 
-    public static  void main(String[] args){
 
+    public static void main(String[] args) throws Exception {
+        String salt = "qopweiruañsñlkdfjz";
+        String pw = "aaabF!";
+
+        Hashes h = new Hashes();
+
+        String[] aHashes = {h.getSHA512AmbSalt(pw, salt),h.getPBKDF2AmbSalt(pw, salt)};
+
+        String pwTrobat = null;
+        String[] algorismes = {"SHA-512", "PBKDF2"};
+
+        for (int i = 0; i < aHashes.length; i++) {
+
+            System.out.printf("==============================%n");
+            System.out.printf("Algorisme: %s%n", algorismes[i]);
+            System.out.printf("Hash: %s%n", aHashes[i]);
+            System.out.printf("------------------------------%n");
+            System.out.printf("-- Inici de força bruta --%n");
+
+            long t1 = System.currentTimeMillis();
+
+            pwTrobat = h.forcaBruta(algorismes[i], aHashes[i], salt);
+
+            long t2 = System.currentTimeMillis();
+
+            System.out.printf("Pass : %s%n", pwTrobat);
+            System.out.printf("Provats: %d%n", h.npass);
+            System.out.printf("Temps : %s%n", h.getInterval(t1, t2));
+            System.out.printf("------------------------------%n%n");
+        }
     }
 }
